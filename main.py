@@ -5,9 +5,11 @@ from datetime import datetime, timedelta
 from mqtt_listener import MQTTListener
 from fcm import send_fcm_notification
 
-# Carregue o arquivo de conta de serviço (NÃO suba para o GitHub!)
-with open("service_account.json", "r") as f:
-    service_account_info = json.load(f)
+service_account_json = os.environ.get("SERVICE_ACCOUNT_JSON")
+if not service_account_json:
+    raise Exception("A variável de ambiente SERVICE_ACCOUNT_JSON não está definida!")
+
+service_account_info = json.loads(service_account_json)
 
 # Configurações MQTT - ajuste conforme seu broker e tópico
 MQTT_BROKER = "broker.emqx.io"  # troque se usar outro broker
@@ -57,3 +59,10 @@ if __name__ == "__main__":
             time.sleep(1)
     except KeyboardInterrupt:
         print("Saindo...")
+
+        """ 
+            git add .
+            git commit -m "atualizaçaõ teste"
+            git push origin master
+
+"""
